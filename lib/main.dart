@@ -2,11 +2,26 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:hack_live_translate/home_screen.dart';
 import 'package:speech_to_text/speech_recognition_error.dart';
 import 'package:speech_to_text/speech_recognition_result.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 
-void main() => runApp(SpeechSampleApp());
+void main() => runApp(MyApp());
+
+class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Live Speech Translate',
+      theme: ThemeData(
+      ),
+      home: HomeScreen(),
+    );
+  }
+}
 
 class SpeechSampleApp extends StatefulWidget {
   @override
@@ -41,10 +56,7 @@ class _SpeechSampleAppState extends State<SpeechSampleApp> {
   Future<void> initSpeechState() async {
     _logEvent('Initialize');
     var hasSpeech = await speech.initialize(
-        onError: errorListener,
-        onStatus: statusListener,
-        debugLogging: true,
-        finalTimeout: Duration(milliseconds: 0));
+        onError: errorListener, onStatus: statusListener, debugLogging: true, finalTimeout: Duration(milliseconds: 0));
     if (hasSpeech) {
       // Get the list of languages installed on the supporting platform so they
       // can be displayed in the UI for selection by the user.
@@ -74,10 +86,8 @@ class _SpeechSampleAppState extends State<SpeechSampleApp> {
             child: Column(
               children: <Widget>[
                 InitSpeechWidget(_hasSpeech, initSpeechState),
-                SpeechControlWidget(_hasSpeech, speech.isListening,
-                    startListening, stopListening, cancelListening),
-                SessionOptionsWidget(_currentLocaleId, _switchLang,
-                    _localeNames, _logEvents, _switchLogging),
+                SpeechControlWidget(_hasSpeech, speech.isListening, startListening, stopListening, cancelListening),
+                SessionOptionsWidget(_currentLocaleId, _switchLang, _localeNames, _logEvents, _switchLogging),
               ],
             ),
           ),
@@ -136,8 +146,7 @@ class _SpeechSampleAppState extends State<SpeechSampleApp> {
   /// This callback is invoked each time new recognition results are
   /// available after `listen` is called.
   void resultListener(SpeechRecognitionResult result) {
-    _logEvent(
-        'Result listener final: ${result.finalResult}, words: ${result.recognizedWords}');
+    _logEvent('Result listener final: ${result.finalResult}, words: ${result.recognizedWords}');
     setState(() {
       lastWords = '${result.recognizedWords} - ${result.finalResult}';
     });
@@ -153,16 +162,14 @@ class _SpeechSampleAppState extends State<SpeechSampleApp> {
   }
 
   void errorListener(SpeechRecognitionError error) {
-    _logEvent(
-        'Received error status: $error, listening: ${speech.isListening}');
+    _logEvent('Received error status: $error, listening: ${speech.isListening}');
     setState(() {
       lastError = '${error.errorMsg} - ${error.permanent}';
     });
   }
 
   void statusListener(String status) {
-    _logEvent(
-        'Received listener status: $status, listening: ${speech.isListening}');
+    _logEvent('Received listener status: $status, listening: ${speech.isListening}');
     setState(() {
       lastStatus = '$status';
     });
@@ -232,10 +239,7 @@ class RecognitionResultsWidget extends StatelessWidget {
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
                       boxShadow: [
-                        BoxShadow(
-                            blurRadius: .26,
-                            spreadRadius: level * 1.5,
-                            color: Colors.black.withOpacity(.05))
+                        BoxShadow(blurRadius: .26, spreadRadius: level * 1.5, color: Colors.black.withOpacity(.05))
                       ],
                       color: Colors.white,
                       borderRadius: BorderRadius.all(Radius.circular(50)),
@@ -301,8 +305,8 @@ class ErrorWidget extends StatelessWidget {
 
 /// Controls to start and stop speech recognition
 class SpeechControlWidget extends StatelessWidget {
-  const SpeechControlWidget(this.hasSpeech, this.isListening,
-      this.startListening, this.stopListening, this.cancelListening,
+  const SpeechControlWidget(
+      this.hasSpeech, this.isListening, this.startListening, this.stopListening, this.cancelListening,
       {Key? key})
       : super(key: key);
 
@@ -335,8 +339,8 @@ class SpeechControlWidget extends StatelessWidget {
 }
 
 class SessionOptionsWidget extends StatelessWidget {
-  const SessionOptionsWidget(this.currentLocaleId, this.switchLang,
-      this.localeNames, this.logEvents, this.switchLogging,
+  const SessionOptionsWidget(
+      this.currentLocaleId, this.switchLang, this.localeNames, this.logEvents, this.switchLogging,
       {Key? key})
       : super(key: key);
 
@@ -360,10 +364,10 @@ class SessionOptionsWidget extends StatelessWidget {
               items: localeNames
                   .map(
                     (localeName) => DropdownMenuItem(
-                  value: localeName.localeId,
-                  child: Text(localeName.name),
-                ),
-              )
+                      value: localeName.localeId,
+                      child: Text(localeName.name),
+                    ),
+                  )
                   .toList(),
             ),
           ],
@@ -383,8 +387,7 @@ class SessionOptionsWidget extends StatelessWidget {
 }
 
 class InitSpeechWidget extends StatelessWidget {
-  const InitSpeechWidget(this.hasSpeech, this.initSpeechState, {Key? key})
-      : super(key: key);
+  const InitSpeechWidget(this.hasSpeech, this.initSpeechState, {Key? key}) : super(key: key);
 
   final bool hasSpeech;
   final Future<void> Function() initSpeechState;
@@ -420,13 +423,13 @@ class SpeechStatusWidget extends StatelessWidget {
       child: Center(
         child: speech.isListening
             ? Text(
-          "I'm listening...",
-          style: TextStyle(fontWeight: FontWeight.bold),
-        )
+                "I'm listening...",
+                style: TextStyle(fontWeight: FontWeight.bold),
+              )
             : Text(
-          'Not listening',
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
+                'Not listening',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
       ),
     );
   }
