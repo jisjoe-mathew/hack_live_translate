@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hack_live_translate/translation_service.dart';
 import 'package:speech_to_text/speech_recognition_result.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 
@@ -33,10 +34,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
   String _lastWords = '';
 
-  void _onSpeechResult(SpeechRecognitionResult result) {
-    setState(() {
-      _lastWords = result.recognizedWords;
-    });
+  void _onSpeechResult(SpeechRecognitionResult result) async {
+    _lastWords = await TranslationService().translateString(result.recognizedWords);
+    setState(() {});
     scrollToEnd();
   }
 
@@ -95,29 +95,82 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             )
           : SizedBox.shrink(),
-      body: Container(
-        margin: EdgeInsets.fromLTRB(20, 0, 20, 140),
-        width: double.infinity,
-        height: double.infinity,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
-          color: Colors.blueGrey.withOpacity(0.15),
-        ),
-        child: SingleChildScrollView(
-          controller: _scrollController,
-          padding: EdgeInsets.all(20),
-          child: Text(
-            _lastWords,
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 28,
-              fontWeight: FontWeight.w300,
-              height: 1.6,
-              letterSpacing: 1.5,
-              backgroundColor: Colors.white10,
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: EdgeInsets.all(20.0),
+            child: Wrap(
+              crossAxisAlignment: WrapCrossAlignment.center,
+              children: [
+                Text(
+                  'English ',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Text(
+                  'to ',
+                  style: TextStyle(color: Colors.white),
+                ),
+                DropdownButton<List<String>>(
+                  style: TextStyle(color: Colors.white),
+                  dropdownColor: Colors.black,
+                  value: languages.firstWhere((element) => element.last == TranslationService.langCode),
+                  items: [
+                    ...languages
+                        .map((e) => DropdownMenuItem<List<String>>(
+                              value: e,
+                              child: Row(
+                                children: <Widget>[
+                                  AbsorbPointer(
+                                    child: Checkbox(
+                                      onChanged: (bool? value) {},
+                                      value: e.last == TranslationService.langCode,
+                                    ),
+                                  ),
+                                  Text(e.first),
+                                ],
+                              ),
+                            ))
+                        .toList(),
+                  ],
+                  onChanged: (value) {
+                    TranslationService().updateLanguage(value!);
+                    setState(() {});
+                  },
+                ),
+              ],
             ),
           ),
-        ),
+          Expanded(
+            child: Container(
+              margin: EdgeInsets.fromLTRB(20, 0, 20, 140),
+              width: double.infinity,
+              height: double.infinity,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                color: Colors.blueGrey.withOpacity(0.15),
+              ),
+              child: SingleChildScrollView(
+                controller: _scrollController,
+                padding: EdgeInsets.all(20),
+                child: Text(
+                  _lastWords,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 28,
+                    fontWeight: FontWeight.w300,
+                    height: 1.6,
+                    letterSpacing: 1.5,
+                    backgroundColor: Colors.white10,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

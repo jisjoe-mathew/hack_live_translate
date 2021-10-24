@@ -12,6 +12,12 @@
       <excludeFolder url="file://$MODULE_DIR$/.dart_tool" />
       <excludeFolder url="file://$MODULE_DIR$/build" />
       <excludeFolder url="file://$MODULE_DIR$/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/ios/.symlinks/plugins/speech_to_text/example/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/ios/.symlinks/plugins/speech_to_text/example/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/ios/.symlinks/plugins/speech_to_text/example/build" />
+      <excludeFolder url="file://$MODULE_DIR$/ios/.symlinks/plugins/speech_to_text/build" />
+      <excludeFolder url="file://$MODULE_DIR$/ios/.symlinks/plugins/speech_to_text/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/ios/.symlinks/plugins/speech_to_text/.dart_tool" />
     </content>
     <orderEntry type="jdk" jdkName="Android API 30 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
