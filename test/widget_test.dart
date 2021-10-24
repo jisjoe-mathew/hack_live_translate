@@ -5,13 +5,13 @@ import 'package:hack_live_translate/main.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 
 void main() {
-  testWidgets('Speech status widget test', (WidgetTester tester) async {
+  testWidgets('Sessions option widget test', (WidgetTester tester) async {
     await tester.pumpWidget(MaterialApp(
-      home: SpeechStatusWidget(
-        speech: SpeechToText(),
+      home: Material(
+        child: SessionOptionsWidget('id', (a) {}, [], true, (b) {}),
       ),
     ));
-    var widget = find.text('Not listening');
+    var widget = find.text('Log events: ');
     expect(widget, findsOneWidget);
   });
 }
