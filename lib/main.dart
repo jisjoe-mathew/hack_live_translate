@@ -16,8 +16,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Live Speech Translate',
-      theme: ThemeData(
-      ),
+      themeMode: ThemeMode.dark,
+      theme: ThemeData(unselectedWidgetColor: Colors.white),
       home: HomeScreen(),
     );
   }
