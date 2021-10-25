@@ -100,8 +100,8 @@ class _HomeScreenState extends State<HomeScreen> {
         children: [
           Padding(
             padding: EdgeInsets.all(20.0),
-            child: Wrap(
-              crossAxisAlignment: WrapCrossAlignment.center,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
                   'English ',
@@ -114,32 +114,35 @@ class _HomeScreenState extends State<HomeScreen> {
                   'to ',
                   style: TextStyle(color: Colors.white),
                 ),
-                DropdownButton<List<String>>(
-                  style: TextStyle(color: Colors.white),
-                  dropdownColor: Colors.black,
-                  value: languages.firstWhere((element) => element.last == TranslationService.langCode),
-                  items: [
-                    ...languages
-                        .map((e) => DropdownMenuItem<List<String>>(
-                              value: e,
-                              child: Row(
-                                children: <Widget>[
-                                  AbsorbPointer(
-                                    child: Checkbox(
-                                      onChanged: (bool? value) {},
-                                      value: e.last == TranslationService.langCode,
+                Expanded(
+                  child: DropdownButton<List<String>>(
+                    isExpanded: true,
+                    style: TextStyle(color: Colors.white),
+                    dropdownColor: Colors.black,
+                    value: languages.firstWhere((element) => element.first == TranslationService.langCode),
+                    items: [
+                      ...languages
+                          .map((e) => DropdownMenuItem<List<String>>(
+                                value: e,
+                                child: Row(
+                                  children: <Widget>[
+                                    AbsorbPointer(
+                                      child: Checkbox(
+                                        onChanged: (bool? value) {},
+                                        value: e.first == TranslationService.langCode,
+                                      ),
                                     ),
-                                  ),
-                                  Text(e.first),
-                                ],
-                              ),
-                            ))
-                        .toList(),
-                  ],
-                  onChanged: (value) {
-                    TranslationService().updateLanguage(value!);
-                    setState(() {});
-                  },
+                                    Text(e.last),
+                                  ],
+                                ),
+                              ))
+                          .toList(),
+                    ],
+                    onChanged: (value) {
+                      TranslationService().updateLanguage(value!);
+                      setState(() {});
+                    },
+                  ),
                 ),
               ],
             ),
