@@ -26,6 +26,7 @@ dependencies:
   speech_to_text: ^5.1.1
   translate: ^1.0.0
   translator: ^0.1.7
+  flutter_tts: ^3.2.2
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -67,7 +68,7 @@ flutter:
   # list giving the asset and other descriptors for the font. For
   # example:
   # fonts:
-  #   - family: Schyler
+  #   - family: 3Schyler
   #     fonts:
   #       - asset: fonts/Schyler-Regular.ttf
   #       - asset: fonts/Schyler-Italic.ttf
