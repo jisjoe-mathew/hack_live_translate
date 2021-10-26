@@ -327,9 +327,7 @@ class _MyAppState extends State<MyApp> {
   }
 
   Widget _buildSliders() {
-    return Column(
-      children: [_volume(), _pitch(), _rate()],
-    );
+    return Container();
   }
 
   Widget _volume() {
@@ -344,20 +342,8 @@ class _MyAppState extends State<MyApp> {
         label: "Volume: $volume");
   }
 
-  Widget _pitch() {
-    return Slider(
-      value: pitch,
-      onChanged: (newPitch) {
-        setState(() => pitch = newPitch);
-      },
-      min: 0.5,
-      max: 2.0,
-      divisions: 15,
-      label: "Pitch: $pitch",
-      activeColor: Colors.red,
-    );
-  }
 
+//rate
   Widget _rate() {
     return Slider(
       value: rate,
