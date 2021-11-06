@@ -130,6 +130,4 @@ const List<List<String>> languages = [
   ['cy', 'Welsh'],
   ['xh', 'Xhosa'],
   ['yi', 'Yiddish'],
-  ['yo', 'Yoruba'],
-  ['zu', 'Zulu']
 ];
